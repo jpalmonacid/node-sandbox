@@ -1,7 +1,5 @@
 // const Foo = require('./Foo');
 // const foo = new Foo('foo').foo();
-// const sayHi = require('./lib/say-hi');
-const fetch = require('./lib/fetch');
 
 function bar(message) {
   console.log(message);
