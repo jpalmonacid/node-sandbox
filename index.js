@@ -7,5 +7,5 @@ function bar(message) {
 
 const Foo = fooClassFactory(bar);
 const foo = new Foo('hola');
-const foo = new Foo('hola', bar);
+// const foo = new Foo('hola', bar);
 
