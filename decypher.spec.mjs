@@ -112,6 +112,12 @@ describe('function decypher', () => {
       needle: 'Create',
       expected: 'Create value'
     },
+    {
+      message: 'decyphers a two-word text with random uppercase characters',
+      cypher: 'Dsfbuf wbMvf',
+      needle: 'Create',
+      expected: 'Create vaLue'
+    },
   ].forEach(({ message, cypher, needle, expected }) => {
     it(message + ` ('${cypher}' => '${expected}')`, () => {
       const result = decypher(cypher, needle);

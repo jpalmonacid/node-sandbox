@@ -23,36 +23,44 @@ function decypher(cypher, needle) {
 function shiftText(text, offset) {
   return text.split('')
     .map(char => {
-      if (
-        (char.charCodeAt() < 'a'.charCodeAt()
-          || char.charCodeAt() > 'z'.charCodeAt())
-        && (char.charCodeAt() < 'A'.charCodeAt()
-          || char.charCodeAt() > 'Z'.charCodeAt())
-        ) {
+      if (!isLowercaseAlphabetChar(char) && !isUppercaseAlphabetChar(char)) {
         return char;
       }
       const offsettedCharCode = char.charCodeAt() - offset;
-      let boundedCharCode = 0, lowestCharCode = 0, highestCharCode = 0;
-      if (
-        char.charCodeAt() >= 'a'.charCodeAt()
-        && char.charCodeAt() <= 'z'.charCodeAt()
-      ) {
+      let lowestCharCode = 0, highestCharCode = 0;
+      if (isLowercaseAlphabetChar(char)) {
         lowestCharCode = 'a'.charCodeAt();
         highestCharCode = 'z'.charCodeAt();
-      } else if (char.charCodeAt() >= 'A'.charCodeAt() && char.charCodeAt() <= 'Z'.charCodeAt()) {
+      } else if (isUppercaseAlphabetChar(char)) {
         lowestCharCode = 'A'.charCodeAt();
         highestCharCode = 'Z'.charCodeAt();
       }
-      if (offsettedCharCode >= lowestCharCode && offsettedCharCode <= highestCharCode) {
-        boundedCharCode = offsettedCharCode;
-      } else if (offsettedCharCode < lowestCharCode) {
-        boundedCharCode = highestCharCode - (lowestCharCode - offsettedCharCode) + 1;
-      } else if (offsettedCharCode > highestCharCode) {
-        boundedCharCode = (offsettedCharCode - highestCharCode) + lowestCharCode + 1;
-      }
+      let boundedCharCode = shiftCharBetweenBoundaries(offsettedCharCode, lowestCharCode, highestCharCode);
       return String.fromCharCode(boundedCharCode);
     })
     .join('');
+}
+
+function isUppercaseAlphabetChar(char) {
+  return char.charCodeAt() >= 'A'.charCodeAt()
+    && char.charCodeAt() <= 'Z'.charCodeAt();
+}
+
+function isLowercaseAlphabetChar(char) {
+  return char.charCodeAt() >= 'a'.charCodeAt()
+    && char.charCodeAt() <= 'z'.charCodeAt();
+}
+
+function shiftCharBetweenBoundaries(charCode, lowestCharCode, highestCharCode) {
+  let boundedCharCode = 0;
+  if (charCode >= lowestCharCode && charCode <= highestCharCode) {
+    boundedCharCode = charCode;
+  } else if (charCode < lowestCharCode) {
+    boundedCharCode = highestCharCode - (lowestCharCode - charCode) + 1;
+  } else if (charCode > highestCharCode) {
+    boundedCharCode = (charCode - highestCharCode) + lowestCharCode + 1;
+  }
+  return boundedCharCode;
 }
 
 export default decypher;
