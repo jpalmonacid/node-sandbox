@@ -23,18 +23,32 @@ function decypher(cypher, needle) {
 function shiftText(text, offset) {
   return text.split('')
     .map(char => {
-      if (char.charCodeAt() < 'a'.charCodeAt()
-        || char.charCodeAt() > 'z'.charCodeAt()) {
+      if (
+        (char.charCodeAt() < 'a'.charCodeAt()
+          || char.charCodeAt() > 'z'.charCodeAt())
+        && (char.charCodeAt() < 'A'.charCodeAt()
+          || char.charCodeAt() > 'Z'.charCodeAt())
+        ) {
         return char;
       }
       const offsettedCharCode = char.charCodeAt() - offset;
-      let boundedCharCode = 0;
-      if (offsettedCharCode >= 'a'.charCodeAt() && offsettedCharCode <= 'z'.charCodeAt()) {
+      let boundedCharCode = 0, lowestCharCode = 0, highestCharCode = 0;
+      if (
+        char.charCodeAt() >= 'a'.charCodeAt()
+        && char.charCodeAt() <= 'z'.charCodeAt()
+      ) {
+        lowestCharCode = 'a'.charCodeAt();
+        highestCharCode = 'z'.charCodeAt();
+      } else if (char.charCodeAt() >= 'A'.charCodeAt() && char.charCodeAt() <= 'Z'.charCodeAt()) {
+        lowestCharCode = 'A'.charCodeAt();
+        highestCharCode = 'Z'.charCodeAt();
+      }
+      if (offsettedCharCode >= lowestCharCode && offsettedCharCode <= highestCharCode) {
         boundedCharCode = offsettedCharCode;
-      } else if (offsettedCharCode < 'a'.charCodeAt()) {
-        boundedCharCode = 'z'.charCodeAt() - ('a'.charCodeAt() - offsettedCharCode) + 1;
-      } else if (offsettedCharCode > 'z'.charCodeAt()) {
-        boundedCharCode = (offsettedCharCode - 'z'.charCodeAt()) + 'a'.charCodeAt() + 1;
+      } else if (offsettedCharCode < lowestCharCode) {
+        boundedCharCode = highestCharCode - (lowestCharCode - offsettedCharCode) + 1;
+      } else if (offsettedCharCode > highestCharCode) {
+        boundedCharCode = (offsettedCharCode - highestCharCode) + lowestCharCode + 1;
       }
       return String.fromCharCode(boundedCharCode);
     })

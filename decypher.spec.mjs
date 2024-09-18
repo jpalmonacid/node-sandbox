@@ -75,7 +75,13 @@ describe('function decypher', () => {
       cypher: 'wbmvf dsfbufe',
       needle: 'who',
       expected: 'invalid'
-    }
+    },
+    {
+      message: 'decyphers a single uppercase character shifted twice to the left',
+      cypher: 'A',
+      needle: 'C',
+      expected: 'C'
+    },
   ].forEach(({ message, cypher, needle, expected }) => {
     it(message + ` ('${cypher}' => '${expected}')`, () => {
       const result = decypher(cypher, needle);
