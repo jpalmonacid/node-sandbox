@@ -2,16 +2,16 @@ function decypher(cypher, needle) {
   const offset = cypher.charCodeAt() - needle.charCodeAt();
   const decypheredText = cypher.split('')
     .map(char => {
-      const charCode = char.charCodeAt() - offset;
-      let calculatedCharCode = 0;
-      if (charCode >= 'a'.charCodeAt() && charCode <= 'z'.charCodeAt()) {
-        calculatedCharCode = charCode;
-      } else if (charCode < 'a'.charCodeAt()) {
-        calculatedCharCode = 'z'.charCodeAt() - ('a'.charCodeAt() - charCode) + 1;
-      } else if (charCode > 'z'.charCodeAt()) {
-        calculatedCharCode = (charCode - 'z'.charCodeAt()) + 'a'.charCodeAt() + 1;
+      const offsettedCharCode = char.charCodeAt() - offset;
+      let boundedCharCode = 0;
+      if (offsettedCharCode >= 'a'.charCodeAt() && offsettedCharCode <= 'z'.charCodeAt()) {
+        boundedCharCode = offsettedCharCode;
+      } else if (offsettedCharCode < 'a'.charCodeAt()) {
+        boundedCharCode = 'z'.charCodeAt() - ('a'.charCodeAt() - offsettedCharCode) + 1;
+      } else if (offsettedCharCode > 'z'.charCodeAt()) {
+        boundedCharCode = (offsettedCharCode - 'z'.charCodeAt()) + 'a'.charCodeAt() + 1;
       }
-      return String.fromCharCode(calculatedCharCode);
+      return String.fromCharCode(boundedCharCode);
     })
     .join('');
   return decypheredText;
