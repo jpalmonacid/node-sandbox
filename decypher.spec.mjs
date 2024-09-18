@@ -82,6 +82,36 @@ describe('function decypher', () => {
       needle: 'C',
       expected: 'C'
     },
+    {
+      message: 'decyphers a single uppercase character shifted twice to the right',
+      cypher: 'C',
+      needle: 'A',
+      expected: 'A'
+    },
+    {
+      message: 'decyphers a capitalized two-letter word shifted twice to the right',
+      cypher: 'Qh',
+      needle: 'Of',
+      expected: 'Of'
+    },
+    {
+      message: 'decyphers a capitalized two-letter word shifted twice to the left',
+      cypher: 'Md',
+      needle: 'Of',
+      expected: 'Of'
+    },
+    {
+      message: 'decyphers a capitalized two-word text with non-letter characters',
+      cypher: 'Dsfbuf wbmvf!',
+      needle: 'Create',
+      expected: 'Create value!'
+    },
+    {
+      message: 'decyphers a capitalized two-word text',
+      cypher: 'Dsfbuf wbmvf',
+      needle: 'Create',
+      expected: 'Create value'
+    },
   ].forEach(({ message, cypher, needle, expected }) => {
     it(message + ` ('${cypher}' => '${expected}')`, () => {
       const result = decypher(cypher, needle);
