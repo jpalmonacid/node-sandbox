@@ -35,4 +35,8 @@ describe('function decypher', () => {
     const result = decypher('adqn', 'zero');
     assert.equal(result, 'zero');
   });
+  it(`decyphers a two-word text`, () => {
+    const result = decypher('dsfbuf wbmvf', 'create');
+    assert.equal(result, 'create value');
+  });
 });

@@ -2,6 +2,12 @@ function decypher(cypher, needle) {
   const offset = cypher.charCodeAt() - needle.charCodeAt();
   const decypheredText = cypher.split('')
     .map(char => {
+      if (
+        char.charCodeAt() < 'a'.charCodeAt()
+        || char.charCodeAt() > 'z'.charCodeAt()
+      ) {
+        return char;
+      }
       const offsettedCharCode = char.charCodeAt() - offset;
       let boundedCharCode = 0;
       if (offsettedCharCode >= 'a'.charCodeAt() && offsettedCharCode <= 'z'.charCodeAt()) {
