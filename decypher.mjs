@@ -1,18 +1,22 @@
 function decypher(cypher, needle) {
   const words = cypher.split(' ');
-  let i = 0, found = false;
+  let i = 0, found = false, cypherOffset = 0;
   while (!found && i < words.length) {
-    if (words[i].length === needle.length) {
-      const offset = words[i].charCodeAt() - needle.charCodeAt();
-      const decypheredWord = shiftText(words[i], offset);
+    const currentWord = words[i];
+    if (currentWord.length === needle.length) {
+      const currentWordOffset = currentWord.charCodeAt() - needle.charCodeAt();
+      const decypheredWord = shiftText(currentWord, currentWordOffset);
       if (decypheredWord === needle) {
         found = true;
+        cypherOffset = currentWordOffset;
       }
     }
     i++;
   }
-  const offset = words[i - 1].charCodeAt() - needle.charCodeAt();
-  const decypheredText = shiftText(cypher, offset);
+  if (!found && i === words.length) {
+    return 'invalid';
+  }
+  const decypheredText = shiftText(cypher, cypherOffset);
   return decypheredText;
 }
 

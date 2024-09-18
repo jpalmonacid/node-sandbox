@@ -69,6 +69,12 @@ describe('function decypher', () => {
       cypher: 'wbmvf dsfbufe',
       needle: 'created',
       expected: 'value created'
+    },
+    {
+      message: 'returns invalid where needle does not match any decyphered word',
+      cypher: 'wbmvf dsfbufe',
+      needle: 'who',
+      expected: 'invalid'
     }
   ].forEach(({ message, cypher, needle, expected }) => {
     it(message + ` ('${cypher}' => '${expected}')`, () => {
