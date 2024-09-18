@@ -63,6 +63,12 @@ describe('function decypher', () => {
       cypher: 'dsfbuf wbmvf!',
       needle: 'create',
       expected: 'create value!'
+    },
+    {
+      message: 'decyphers a two-word text where the needle matches the second word',
+      cypher: 'wbmvf dsfbufe',
+      needle: 'created',
+      expected: 'value created'
     }
   ].forEach(({ message, cypher, needle, expected }) => {
     it(message + ` ('${cypher}' => '${expected}')`, () => {

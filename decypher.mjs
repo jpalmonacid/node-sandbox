@@ -1,11 +1,26 @@
 function decypher(cypher, needle) {
-  const offset = cypher.charCodeAt() - needle.charCodeAt();
-  const decypheredText = cypher.split('')
+  const words = cypher.split(' ');
+  let i = 0, found = false, decypheredWord = '';
+  while (!found && i < words.length) {
+    if (words[i].length === needle.length) {
+      const offset = words[i].charCodeAt() - needle.charCodeAt();
+      decypheredWord = decodeText(words[i], offset);
+      if (decypheredWord === needle) {
+        found = true;
+      }
+    }
+    i++;
+  }
+  const offset = words[i - 1].charCodeAt() - needle.charCodeAt();
+  const decypheredText = decodeText(cypher, offset);
+  return decypheredText;
+}
+
+function decodeText(text, offset) {
+  return text.split('')
     .map(char => {
-      if (
-        char.charCodeAt() < 'a'.charCodeAt()
-        || char.charCodeAt() > 'z'.charCodeAt()
-      ) {
+      if (char.charCodeAt() < 'a'.charCodeAt()
+        || char.charCodeAt() > 'z'.charCodeAt()) {
         return char;
       }
       const offsettedCharCode = char.charCodeAt() - offset;
@@ -20,7 +35,6 @@ function decypher(cypher, needle) {
       return String.fromCharCode(boundedCharCode);
     })
     .join('');
-  return decypheredText;
 }
 
 export default decypher;
